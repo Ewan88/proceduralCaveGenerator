@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    public int width = 120;
-    public int height = 80;
+    public int width = 60;
+    public int height = 40;
 
     public string seed;
     public bool useRandomSeed = true;
@@ -40,6 +40,9 @@ public class MapGenerator : MonoBehaviour
         {
             SmoothMap();
         }
+
+        MeshGenerator meshGenerator = GetComponent<MeshGenerator>();
+        meshGenerator.GenerateMesh(map, 1);
     }
 
     void RandomFillMap()
@@ -106,21 +109,5 @@ public class MapGenerator : MonoBehaviour
         }
 
         return wallCount;
-    }
-
-    void OnDrawGizmos()
-    {
-        if (map != null)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    Gizmos.color = (map[x, y] == 1) ? Color.black : Color.white;
-                    Vector3 pos = new Vector3(-width / 2 + x + .5f, 0, -height / 2 + y + .5f);
-                    Gizmos.DrawCube(pos, Vector3.one);
-                }
-            }
-        }
     }
 }
